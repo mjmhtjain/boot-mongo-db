@@ -73,4 +73,8 @@ kubectl get secrets
 
 kubectl describe secret dashboard-admin-sa-token-jpkk9
 
+docker run -p 6379:6379 -d redis
+
+docker run -p 27017:27017 -d mongo
+
 ```

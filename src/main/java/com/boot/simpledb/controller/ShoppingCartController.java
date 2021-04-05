@@ -1,7 +1,9 @@
 package com.boot.simpledb.controller;
 
+import com.boot.simpledb.model.Book;
 import com.boot.simpledb.model.ShoppingCart;
 import com.boot.simpledb.model.ShoppingCartItem;
+import com.boot.simpledb.service.BookRepo;
 import com.boot.simpledb.service.ShoppingCartService;
 import lombok.NonNull;
 import org.slf4j.Logger;
@@ -19,6 +21,9 @@ public class ShoppingCartController {
 
     @Autowired
     ShoppingCartService shoppingCartService;
+
+    @Autowired
+    BookRepo bookRepo;
 
     @GetMapping
     ResponseEntity demo() {
@@ -56,6 +61,30 @@ public class ShoppingCartController {
         log.info("addItem: ShoppingCartItem: {}", shoppingCartItem);
 
         ShoppingCartItem res = shoppingCartService.addItem(shoppingCartItem);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(res);
+    }
+
+    @PostMapping("/book")
+    ResponseEntity addBook(@RequestBody Book book) {
+        log.info("addBook: Book: {}", book);
+
+        bookRepo.save(book);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .build();
+    }
+
+    @GetMapping("/book/{id}")
+    ResponseEntity getBook(@PathVariable Long id) {
+        log.info("getBook: id: {}", id);
+
+        Book res = bookRepo.findById(id);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
