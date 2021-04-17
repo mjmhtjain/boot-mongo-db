@@ -1,7 +1,7 @@
 package com.boot.simpledb.controller;
 
 import com.boot.simpledb.model.Book;
-import com.boot.simpledb.service.BookRepo;
+import com.boot.simpledb.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +17,35 @@ public class BookController {
     Logger log = LoggerFactory.getLogger(ShoppingCartController.class);
 
     @Autowired
-    BookRepo bookRepo;
+    BookService bookService;
 
     @PostMapping("/book")
     ResponseEntity addBook(@RequestBody Book book) {
         log.info("addBook: Book: {}", book);
 
-        bookRepo.save(book);
+        Book savedBook = bookService.save(book);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
-                .build();
+                .body(savedBook);
     }
 
     @GetMapping("/book/{id}")
     ResponseEntity getBook(@PathVariable String id) {
         log.info("getBook: id: {}", id);
 
-        Book res = bookRepo.findById(id);
+        Book res = bookService.findById(id);
+
+        if(res == null){
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .build();
+        }
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.ACCEPTED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(res);
     }

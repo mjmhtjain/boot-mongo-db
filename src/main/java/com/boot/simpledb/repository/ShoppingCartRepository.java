@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ShoppingCartRepository extends MongoRepository<ShoppingCartItem, Long> {
+public interface ShoppingCartRepository extends MongoRepository<ShoppingCartItem, String> {
 
     List<ShoppingCartItem> findByUserId(long userId);
 }
