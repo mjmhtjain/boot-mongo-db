@@ -14,7 +14,7 @@ public class BookRepo {
         redisTemplate.opsForValue().set(book.id, book);
     }
 
-    public Book findById(Long id) {
+    public Book findById(String id) {
         return redisTemplate.opsForValue().get(id);
     }
 }

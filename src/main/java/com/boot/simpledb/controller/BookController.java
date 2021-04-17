@@ -32,7 +32,7 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    ResponseEntity getBook(@PathVariable Long id) {
+    ResponseEntity getBook(@PathVariable String id) {
         log.info("getBook: id: {}", id);
 
         Book res = bookRepo.findById(id);
