@@ -1,6 +1,5 @@
 package com.boot.simpledb;
 
-import com.boot.simpledb.model.Book;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,10 +14,9 @@ public class SimpledbApplication {
     }
 
     @Bean
-    public RedisTemplate<Long, Book> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<Long, Book> template = new RedisTemplate<>();
+    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-        // Add some specific configuration here. Key serializers, etc.
         return template;
     }
 }

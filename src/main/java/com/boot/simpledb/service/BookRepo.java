@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookRepo {
     @Autowired
-    private RedisTemplate<Long, Book> redisTemplate;
+    private RedisTemplate<String, Book> redisTemplate;
 
     public void save(Book book) {
         redisTemplate.opsForValue().set(book.id, book);
